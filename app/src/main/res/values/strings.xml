@@ -1,6 +1,21 @@
 <resources>
     <string name="app_name">Fifty2Book</string>
+    <string name="statsHeader">Quick Stats</string>
     <string name="action_settings">Settings</string>
     <string name="progressText">Your Progress:</string>
     <string name="goalText">Goal:</string>
+    <string name="readText">Read:</string>
+    <string name="remainingText">Remaining:</string>
+    <string name="goalVal">Set a Goal!</string>
+    <string name="goalPercent"> %</string>
+    <string name="readVal">0</string>
+    <string name="remVal">0</string>
+    <string name="title_activity_settings">SettingsActivity</string>
+    <string-array name="spinnerArray">
+        <item>Days</item>
+        <item>Weeks</item>
+        <item>Months</item>
+    </string-array>
+    <string name="settingsGoalText">I\'m going to read </string>
+    <string name="settingsGoalText1">books in </string>
 </resources>
