@@ -11,15 +11,13 @@
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay"
         android:id="@+id/view">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+            android:background="?attr/colorPrimary" />
 
     </android.support.design.widget.AppBarLayout>
 
@@ -47,9 +45,11 @@
         android:inputType="number"
         android:ems="10"
         android:id="@+id/booksGoal"
+        android:imeOptions="actionNext"
         android:layout_alignTop="@+id/goalText1"
         android:layout_alignParentEnd="true"
-        android:layout_marginRight="35dp" />
+        android:layout_marginRight="35dp"
+        android:textAlignment="center" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -68,8 +68,10 @@
         android:inputType="number"
         android:ems="10"
         android:id="@+id/weeksGoal"
+        android:imeOptions="actionDone"
         android:layout_alignTop="@+id/goalText2"
-        android:layout_toEndOf="@+id/goalText2" />
+        android:layout_toEndOf="@+id/goalText2"
+        android:textAlignment="center" />
 
     <Spinner
         android:layout_width="150dp"
@@ -77,5 +79,15 @@
         android:id="@+id/goalSpinner"
         android:layout_alignBottom="@+id/weeksGoal"
         android:layout_toEndOf="@+id/goalText1" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/goalButton"
+        android:id="@+id/setGoalButton"
+        android:layout_marginTop="88dp"
+        android:layout_below="@+id/weeksGoal"
+        android:layout_centerHorizontal="true"
+        android:textSize="12pt" />
 
 </RelativeLayout>
