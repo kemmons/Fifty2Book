@@ -19,4 +19,5 @@
     <string name="settingsGoalText">I\'m going to read </string>
     <string name="settingsGoalText1">books in </string>
     <string name="goalButton">Set Goal!</string>
+    <string name="timeLeft"> days left!</string>
 </resources>

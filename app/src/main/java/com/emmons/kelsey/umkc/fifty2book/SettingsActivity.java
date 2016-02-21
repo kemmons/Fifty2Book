@@ -26,7 +26,8 @@ import java.security.Key;
 public class SettingsActivity extends AppCompatActivity {
 
     private static final String PREFS_NAME = "PrefsFile";
-    private final String GOAL = "goal", READ = "read", REM = "to_read";
+    private final String GOAL = "goal", READ = "read", REM = "to_read",
+            TIME = "time", T_UNITS = "time_units";
 
     private int goal = 0, read = 0, to_read = 0;
     private int time_left = 0;
@@ -65,6 +66,7 @@ public class SettingsActivity extends AppCompatActivity {
                 time_type = goalSpinner.getSelectedItem().toString();
 
                 SavePreferences();
+                finish();
             }
         };
         setGoalButton.setOnClickListener(sGButton);
@@ -72,13 +74,15 @@ public class SettingsActivity extends AppCompatActivity {
 
     private void SavePreferences() {
         SharedPreferences goalPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-
         SharedPreferences.Editor prefsEditor = goalPrefs.edit();
         prefsEditor.putInt(GOAL,goal);
         prefsEditor.putInt(READ,read);
         prefsEditor.putInt(REM, to_read);
+        prefsEditor.putInt(TIME, time_left);
+        prefsEditor.putString(T_UNITS, time_type);
         prefsEditor.apply();
     }
+
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;

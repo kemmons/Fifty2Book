@@ -14,7 +14,8 @@
     android:showDividers="end"
     android:rowCount="6"
     android:columnCount="2"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:id="@+id/timeProgress">
 
     <TextView
         android:layout_width="wrap_content"
@@ -122,4 +123,39 @@
         android:layout_alignTop="@+id/readValue"
         android:layout_alignStart="@+id/remainingLabel"
         android:layout_marginLeft="35dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Time Left: "
+        android:id="@+id/timeLabel"
+        android:layout_below="@+id/readValue"
+        android:layout_alignStart="@+id/readLabel"
+        android:layout_marginTop="25dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text=" "
+        android:id="@+id/daysVal"
+        android:layout_alignBottom="@+id/timeLabel"
+        android:layout_toEndOf="@+id/timeLabel"
+        android:layout_marginLeft="10dp" />
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="352dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBar"
+        android:progressDrawable="@drawable/progress_countdown"
+        android:layout_gravity="center_vertical"
+        android:visibility="visible"
+        android:max="100"
+        android:progress="100"
+        android:layout_below="@+id/timeLabel"
+        android:layout_alignStart="@+id/goalProgress"
+        android:layout_marginTop="20dp"
+        android:layout_alignEnd="@+id/goalProgress" />
 </RelativeLayout>
