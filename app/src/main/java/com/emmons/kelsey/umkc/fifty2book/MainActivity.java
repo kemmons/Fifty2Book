@@ -12,8 +12,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -25,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
             TIME = "time", T_UNITS = "time_units";
     private int read = 0, to_read = 0, goal = 0, time = 0;
     private String time_units = "";
+    private ListView mDrawerList;
+    private ArrayAdapter<String> mAdapter;
 
 
     @Override
@@ -39,11 +45,25 @@ public class MainActivity extends AppCompatActivity {
             time = savedInstanceState.getInt("time");
             time_units = savedInstanceState.getString("t_units");
         }
+        mDrawerList = (ListView) findViewById(R.id.navList);
         //toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        addDrawerItems();
+        mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(MainActivity.this, "Item Clicked", Toast.LENGTH_SHORT).show();
+            }
+        });
         LoadPreferences();
         UpdateGoals();
+    }
+
+    private void addDrawerItems() {
+        String[] activityArray = {"Book List", "Quick Stats", "Add Book"};
+        mAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, activityArray);
+        mDrawerList.setAdapter(mAdapter);
     }
 
     private void LoadPreferences() {
@@ -98,6 +118,14 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.action_settings:
                 Intent intent = new Intent(this, SettingsActivity.class);
+                startActivity(intent);
+                return true;
+            case R.id.action_list:
+                intent = new Intent(this, BookListActivity.class);
+                startActivity(intent);
+                return true;
+            case R.id.action_add:
+                intent = new Intent(this, AddBookActivity.class);
                 startActivity(intent);
                 return true;
             default:

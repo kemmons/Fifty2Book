@@ -22,7 +22,11 @@
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".BookListActivity"></activity>
+        <activity android:name=".BookListActivity" />
+        <activity
+            android:name=".AddBookActivity"
+            android:label="@string/title_activity_add_book"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

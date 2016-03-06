@@ -20,4 +20,13 @@
     <string name="settingsGoalText1">books in </string>
     <string name="goalButton">Set Goal!</string>
     <string name="timeLeft"> days left!</string>
+    <string name="action_list">Book List</string>
+    <string name="action_add">Add</string>
+    <string name="title_activity_add_book">AddBookActivity</string>
+    <string name="bookTitle">Book Title:</string>
+    <string name="authorName">Author Name:</string>
+    <string name="genre">Genre:</string>
+    <string name="pages">Pages:</string>
+    <string name="rating">Rating</string>
+    <string name="addButton">Add Book</string>
 </resources>
