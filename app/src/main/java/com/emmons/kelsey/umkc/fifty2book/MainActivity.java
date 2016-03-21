@@ -1,14 +1,14 @@
 package com.emmons.kelsey.umkc.fifty2book;
 
-import android.content.Context;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,7 +18,8 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import android.os.Parcelable;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -30,7 +31,11 @@ public class MainActivity extends AppCompatActivity {
     private int read = 0, to_read = 0, goal = 0, time = 0;
     private String time_units = "";
     private ListView mDrawerList;
+    private DrawerLayout mDrawerLayout;
     private ArrayAdapter<String> mAdapter;
+    private ActionBarDrawerToggle mDrawerToggle;
+    private String mActivityTitle;
+    public ArrayList<BookObject> booksList = new ArrayList<>();
 
 
     @Override
@@ -44,18 +49,22 @@ public class MainActivity extends AppCompatActivity {
             goal = savedInstanceState.getInt("goal");
             time = savedInstanceState.getInt("time");
             time_units = savedInstanceState.getString("t_units");
+            booksList = savedInstanceState.getParcelableArrayList("bookList");
         }
+
+
         mDrawerList = (ListView) findViewById(R.id.navList);
-        //toolbar
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
+        mActivityTitle = getTitle().toString();
+        booksList.add(new BookObject("Test", "Author", "SciFi", "400"));
+        booksList.add(new BookObject("The Once and Future King", "T. H. White", "Fantasy", "500"));
+
         addDrawerItems();
-        mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(MainActivity.this, "Item Clicked", Toast.LENGTH_SHORT).show();
-            }
-        });
+        setupDrawer();
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+
         LoadPreferences();
         UpdateGoals();
     }
@@ -64,6 +73,43 @@ public class MainActivity extends AppCompatActivity {
         String[] activityArray = {"Book List", "Quick Stats", "Add Book"};
         mAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, activityArray);
         mDrawerList.setAdapter(mAdapter);
+
+        mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(MainActivity.this, "Item Clicked", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void setupDrawer() {
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.drawer_open, R.string.drawer_close) {
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                getSupportActionBar().setTitle("Navigation");
+                invalidateOptionsMenu();
+                }
+
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+                getSupportActionBar().setTitle(mActivityTitle);
+                invalidateOptionsMenu();
+            }
+        };
+        mDrawerToggle.setDrawerIndicatorEnabled(true);
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        mDrawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        mDrawerToggle.onConfigurationChanged(newConfig);
     }
 
     private void LoadPreferences() {
@@ -122,10 +168,12 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             case R.id.action_list:
                 intent = new Intent(this, BookListActivity.class);
+                intent.putParcelableArrayListExtra("bookList", booksList);
                 startActivity(intent);
                 return true;
             case R.id.action_add:
                 intent = new Intent(this, AddBookActivity.class);
+                intent.putParcelableArrayListExtra("bookList", booksList);
                 startActivity(intent);
                 return true;
             default:
@@ -172,6 +220,7 @@ public class MainActivity extends AppCompatActivity {
         icicle.putInt("goal", goal);
         icicle.putInt("read", read);
         icicle.putInt("rem", to_read);
+        icicle.putParcelableArrayList("bookList", booksList);
     }
 
     @Override

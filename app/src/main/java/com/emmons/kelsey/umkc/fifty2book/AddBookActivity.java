@@ -3,8 +3,6 @@ package com.emmons.kelsey.umkc.fifty2book;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -24,12 +22,11 @@ public class AddBookActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_book);
+        booksList = getIntent().getParcelableArrayListExtra("bookList");
         setListeners();
     }
 
     private void setListeners() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
         //set fields
         final View titleText = findViewById(R.id.bookTitleText);
@@ -54,7 +51,6 @@ public class AddBookActivity extends AppCompatActivity {
                         book.setRating(rating);
                     }
                     booksList.add(book);
-                    SavePrefs();
                     finish();
                 }
             }
@@ -62,12 +58,5 @@ public class AddBookActivity extends AppCompatActivity {
         addButton.setOnClickListener(aButton);
     }
 
-    private void SavePrefs() {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        JSONArray jsonArray = new JSONArray();
-        jsonArray.put(booksList);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putString("books", jsonArray.toString());
-        editor.apply();
-    }
+
 }

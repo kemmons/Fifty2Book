@@ -128,7 +128,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Time Left: "
+        android:text="@string/timeLeft"
         android:id="@+id/timeLabel"
         android:layout_below="@+id/readValue"
         android:layout_alignStart="@+id/readLabel"

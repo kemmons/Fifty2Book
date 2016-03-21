@@ -10,7 +10,7 @@
     <string name="goalPercent"> %</string>
     <string name="readVal">0</string>
     <string name="remVal">0</string>
-    <string name="title_activity_settings">SettingsActivity</string>
+    <string name="title_activity_settings">Settings</string>
     <string-array name="spinnerArray">
         <item>Days</item>
         <item>Weeks</item>
@@ -19,14 +19,16 @@
     <string name="settingsGoalText">I\'m going to read </string>
     <string name="settingsGoalText1">books in </string>
     <string name="goalButton">Set Goal!</string>
-    <string name="timeLeft"> days left!</string>
+    <string name="timeLeft">Time Remaining:</string>
     <string name="action_list">Book List</string>
     <string name="action_add">Add</string>
-    <string name="title_activity_add_book">AddBookActivity</string>
+    <string name="title_activity_add_book">Add Book</string>
     <string name="bookTitle">Book Title:</string>
     <string name="authorName">Author Name:</string>
     <string name="genre">Genre:</string>
     <string name="pages">Pages:</string>
     <string name="rating">Rating</string>
     <string name="addButton">Add Book</string>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
 </resources>

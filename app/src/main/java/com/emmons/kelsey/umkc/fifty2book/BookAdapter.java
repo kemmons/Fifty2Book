@@ -17,7 +17,7 @@ public class BookAdapter extends BaseAdapter {
     private ArrayList<BookObject> books;
     private LayoutInflater layoutInflater;
 
-    public BookAdapter(Context context, ArrayList<BookObject> values) {
+    public BookAdapter(Context context, ArrayList<BookObject> books) {
 
         this.books = books;
         layoutInflater = LayoutInflater.from(context);

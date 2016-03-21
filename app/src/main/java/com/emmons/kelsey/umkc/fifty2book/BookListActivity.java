@@ -32,21 +32,12 @@ public class BookListActivity extends ListActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        try {
-            JSONArray jsonArray2 = new JSONArray(prefs.getString("books", "[]"));
-            for (int i = 0; i < jsonArray2.length(); i++) {
-                Log.d("my JSON Array", jsonArray2.getInt(i) + "");
-
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         setContentView(R.layout.activity_book_list);
+        books = getIntent().getParcelableArrayListExtra("bookList");
 
-        ArrayList values = getListData();
         booksList = (ListView) findViewById(android.R.id.list);
-        if (values != null && booksList != null) {
-            booksList.setAdapter(new BookAdapter(this, values));
+        if (books != null && booksList != null) {
+            booksList.setAdapter(new BookAdapter(this, books));
             booksList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

@@ -6,23 +6,169 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.emmons.kelsey.umkc.fifty2book.MainActivity">
+    android:focusable="false">
 
-    <android.support.design.widget.AppBarLayout
+    <android.support.v7.widget.Toolbar
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:layout_height="match_parent">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+    </android.support.v7.widget.Toolbar>
 
-    </android.support.design.widget.AppBarLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:context="com.emmons.kelsey.umkc.fifty2book.MainActivity"
+        android:orientation="vertical"
+        android:background="#ffffffff">
 
-    <include layout="@layout/content_main" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/goalText"
+            android:id="@+id/goalLabel"
+            android:layout_marginLeft="45dp"
+            android:layout_marginTop="120dp" />
+
+        <TextView
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/progressText"
+            android:id="@+id/progressText"
+            android:layout_alignStart="@+id/goalLabel"
+            android:layout_marginTop="170dp" />
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="352dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/goalProgress"
+            android:progressDrawable="@drawable/progress_drawable"
+            android:layout_gravity="center_vertical"
+            android:visibility="visible"
+            android:max="100"
+            android:progress="0"
+            android:layout_marginLeft="32dp"
+            android:layout_below="@+id/progressText"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/readText"
+            android:id="@+id/readLabel"
+            android:layout_below="@+id/goalLabel"
+            android:layout_marginLeft="45dp"
+            android:layout_marginTop="120dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/remainingText"
+            android:id="@+id/remainingLabel"
+            android:layout_marginRight="45dp"
+            android:layout_alignTop="@+id/readLabel"
+            android:layout_alignEnd="@+id/goalProgress"
+            android:layout_marginEnd="33dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/statsHeader"
+            android:id="@+id/headerLabel"
+            android:layout_alignParentTop="true"
+            android:layout_alignStart="@+id/goalProgress"
+            android:layout_marginTop="33dp"
+            android:textSize="24pt"
+            android:textStyle="italic"
+            android:layout_alignParentEnd="false" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/goalVal"
+            android:id="@+id/goalValue"
+            android:layout_above="@+id/readLabel"
+            android:layout_toEndOf="@id/goalLabel"
+            android:layout_marginLeft="10dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/goalPercent"
+            android:id="@+id/progressPercent"
+            android:layout_marginTop="165dp"
+            android:layout_marginLeft="10dp"
+            android:layout_toEndOf="@id/progressText" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/readVal"
+            android:id="@+id/readValue"
+            android:layout_below="@+id/readLabel"
+            android:layout_alignStart="@+id/readLabel"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="15dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/remVal"
+            android:id="@+id/remainValue"
+            android:layout_alignTop="@+id/readValue"
+            android:layout_alignStart="@+id/remainingLabel"
+            android:layout_marginLeft="35dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/timeLeft"
+            android:id="@+id/timeLabel"
+            android:layout_below="@+id/readValue"
+            android:layout_alignStart="@+id/readLabel"
+            android:layout_marginTop="25dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text=" "
+            android:id="@+id/daysVal"
+            android:layout_alignBottom="@+id/timeLabel"
+            android:layout_toEndOf="@+id/timeLabel"
+            android:layout_marginLeft="10dp" />
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="352dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/progressBar"
+            android:progressDrawable="@drawable/progress_countdown"
+            android:layout_gravity="center_vertical"
+            android:visibility="visible"
+            android:max="100"
+            android:progress="100"
+            android:layout_below="@+id/timeLabel"
+            android:layout_alignStart="@+id/goalProgress"
+            android:layout_marginTop="20dp"
+            android:layout_alignEnd="@+id/goalProgress" />
+    </RelativeLayout>
 
     <!-- Side bar navigation -->
     <ListView
