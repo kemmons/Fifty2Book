@@ -22,12 +22,13 @@ import android.widget.TextView;
 import org.w3c.dom.Text;
 
 import java.security.Key;
+import java.text.SimpleDateFormat;
 
 public class SettingsActivity extends AppCompatActivity {
 
     private static final String PREFS_NAME = "PrefsFile";
     private final String GOAL = "goal", READ = "read", REM = "to_read",
-            TIME = "time", T_UNITS = "time_units";
+            TIME = "time", T_UNITS = "time_units", START_DATE = "start_date";
 
     private int goal = 0, read = 0, to_read = 0;
     private int time_left = 0;
@@ -49,9 +50,6 @@ public class SettingsActivity extends AppCompatActivity {
         goalSpinAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         goalSpinner.setAdapter(goalSpinAdapter);
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
         Button setGoalButton = (Button) findViewById(R.id.setGoalButton);
         View.OnClickListener sGButton = new View.OnClickListener() {
@@ -75,11 +73,13 @@ public class SettingsActivity extends AppCompatActivity {
     private void SavePreferences() {
         SharedPreferences goalPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         SharedPreferences.Editor prefsEditor = goalPrefs.edit();
+        SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
         prefsEditor.putInt(GOAL,goal);
         prefsEditor.putInt(READ,read);
         prefsEditor.putInt(REM, to_read);
         prefsEditor.putInt(TIME, time_left);
         prefsEditor.putString(T_UNITS, time_type);
+        prefsEditor.putString(START_DATE, date.toString());
         prefsEditor.apply();
     }
 

@@ -19,17 +19,23 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.os.Parcelable;
+
+import junit.framework.Assert;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final String PREFS_NAME = "PrefsFile";
     private final String GOAL = "goal", READ = "read", REM = "to_read",
-            TIME = "time", T_UNITS = "time_units";
+            TIME = "time", T_UNITS = "time_units", START_DATE = "start_date";
     private int read = 0, to_read = 0, goal = 0, time = 0;
-    private String time_units = "";
+    private String time_units = "", start_date = "";
     private ListView mDrawerList;
     private DrawerLayout mDrawerLayout;
     private ArrayAdapter<String> mAdapter;
@@ -61,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
 
         addDrawerItems();
         setupDrawer();
+
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
@@ -118,6 +125,7 @@ public class MainActivity extends AppCompatActivity {
         to_read = goalPrefs.getInt(GOAL, 0) - read;
         time = goalPrefs.getInt(TIME, 0);
         time_units = goalPrefs.getString(T_UNITS, "");
+        start_date = goalPrefs.getString(START_DATE, "");
         UpdateGoals();
     }
 
@@ -129,6 +137,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void UpdateGoals() {
+        String date = getCurrentTime();
         TextView t = (TextView) findViewById(R.id.goalValue);
         t.setText(Integer.toString(goal));
         t = (TextView) findViewById(R.id.remainValue);
@@ -136,12 +145,19 @@ public class MainActivity extends AppCompatActivity {
         if  (!time_units.equals("")) {
             if (time_units.equals("Weeks")) {
                 time = time * 7;
-            }
-            else if (time_units.equals("Months")) {
+            } else if (time_units.equals("Months")) {
                 time = time * 30;
             }
             t = (TextView) findViewById(R.id.daysVal);
-            t.setText(Integer.toString(time) + " days left");
+
+            long days_passed = getDaysDiff(date, start_date);
+            if (days_passed != -1) {
+                int time_left = (int) (time - days_passed);
+                t.setText(Integer.toString(time_left) + " days left");
+            }
+            else {
+                t.setText(Integer.toString(time) + " days left");
+            }
         }
         if (goal > 0) {
             int progress = ((read / goal) * 100);
@@ -149,8 +165,40 @@ public class MainActivity extends AppCompatActivity {
             t.setText(Integer.toString(progress) + "%");
             ProgressBar prog = (ProgressBar) findViewById(R.id.goalProgress);
             prog.setProgress(progress);
+
+            ProgressBar timeBar = (ProgressBar) findViewById(R.id.progressBar);
+            long days = getDaysDiff(date, start_date);
+            if (days != -1) {
+                int time_prog = (int) ((days / time) * 100);
+                timeBar.setProgress(time_prog);
+            }
+            else {
+                timeBar.setProgress(100);
+            }
         }
         //TODO: add calculation using calendar to update progress bar
+    }
+
+    public static long getDaysDiff(String today, String started) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            Date now = sdf.parse(today);
+            Date then = sdf.parse(started);
+            long diff = now.getTime() - then.getTime();
+            return (TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS));
+        } catch (ParseException pe) {
+            //there was an issue with the Date parsing,
+            //return -1 and resort to default behavior
+            //(no date calculation)
+            return -1;
+        }
+    }
+
+    public static String getCurrentTime() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date now = new Date();
+        String strDate = sdf.format(now);
+        return strDate;
     }
 
     @Override
@@ -163,9 +211,15 @@ public class MainActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         switch (item.getItemId()) {
             case R.id.action_settings:
-                Intent intent = new Intent(this, SettingsActivity.class);
-                startActivity(intent);
-                return true;
+                Intent intent = null;
+                try {
+                    intent = new Intent(this, SettingsActivity.class);
+                    startActivity(intent);
+                    return true;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Toast.makeText(MainActivity.this, "There was an issue launching Settings", Toast.LENGTH_SHORT).show();
+                }
             case R.id.action_list:
                 intent = new Intent(this, BookListActivity.class);
                 intent.putParcelableArrayListExtra("bookList", booksList);
@@ -174,13 +228,23 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_add:
                 intent = new Intent(this, AddBookActivity.class);
                 intent.putParcelableArrayListExtra("bookList", booksList);
-                startActivity(intent);
+                startActivityForResult(intent, 1);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
     //life cycle methods
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 1) {
+            if (resultCode == RESULT_OK) {
+                booksList = data.getParcelableArrayListExtra("books");
+                Assert.assertNotNull(booksList);
+            }
+
+        }
+    }
     @Override
     protected void onStart() {
         super.onStart();
