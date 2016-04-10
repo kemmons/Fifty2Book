@@ -76,7 +76,7 @@ public class AddBookActivity extends AppCompatActivity {
     }
 
     public void addNewBook() throws Exception {
-        if (true) {
+        if (blankField) {
             Exception e = new Exception();
             throw e;
         } else {
