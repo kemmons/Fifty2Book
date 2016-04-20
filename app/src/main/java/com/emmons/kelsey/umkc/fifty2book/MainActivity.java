@@ -62,8 +62,6 @@ public class MainActivity extends AppCompatActivity {
         mDrawerList = (ListView) findViewById(R.id.navList);
         mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
         mActivityTitle = getTitle().toString();
-        booksList.add(new BookObject("Test", "Author", "SciFi", "400"));
-        booksList.add(new BookObject("The Once and Future King", "T. H. White", "Fantasy", "500"));
 
         addDrawerItems();
         setupDrawer();

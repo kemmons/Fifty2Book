@@ -31,4 +31,9 @@
     <string name="addButton">Add Book</string>
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
+    <string name="cmd_mark_read">Mark Read</string>
+    <string name="cmd_cancel">Cancel</string>
+    <string name="empty_list_msg">Your book list is empty.</string>
+    <string name="alert_title">Book Options</string>
+    <string name="title_activity_read_books_list">ReadBooksListActivity</string>
 </resources>
