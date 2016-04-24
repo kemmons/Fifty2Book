@@ -35,5 +35,6 @@
     <string name="cmd_cancel">Cancel</string>
     <string name="empty_list_msg">Your book list is empty.</string>
     <string name="alert_title">Book Options</string>
-    <string name="title_activity_read_books_list">ReadBooksListActivity</string>
+    <string name="title_activity_read_books_list">Read Books List</string>
+    <string name="delete_alert_title">Delete Book?</string>
 </resources>

@@ -1,6 +1,5 @@
 package com.emmons.kelsey.umkc.fifty2book;
 
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -18,14 +17,10 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.os.Parcelable;
-
 import junit.framework.Assert;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
@@ -42,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private ActionBarDrawerToggle mDrawerToggle;
     private String mActivityTitle;
     public ArrayList<BookObject> booksList = new ArrayList<>();
+    public ArrayList<BookObject> readBookList = new ArrayList<>();
 
 
     @Override
@@ -56,8 +52,8 @@ public class MainActivity extends AppCompatActivity {
             time = savedInstanceState.getInt("time");
             time_units = savedInstanceState.getString("t_units");
             booksList = savedInstanceState.getParcelableArrayList("bookList");
+            readBookList = savedInstanceState.getParcelableArrayList("readBookList");
         }
-
 
         mDrawerList = (ListView) findViewById(R.id.navList);
         mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
@@ -82,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
         mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(MainActivity.this, "Item Clicked", Toast.LENGTH_SHORT).show();
+                selectItem(position);
             }
         });
     }
@@ -105,6 +101,21 @@ public class MainActivity extends AppCompatActivity {
         mDrawerLayout.setDrawerListener(mDrawerToggle);
     }
 
+    private void selectItem(int pos) {
+        Intent intent;
+        switch(pos) {
+            case 0:
+                intent = new Intent(MainActivity.this, BookListActivity.class);
+                startActivity(intent);
+                break;
+            case 1:
+                break;
+            case 2:
+                intent = new Intent(MainActivity.this, AddBookActivity.class);
+                startActivityForResult(intent,1);
+                break;
+        }
+    }
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
@@ -221,13 +232,19 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_list:
                 intent = new Intent(this, BookListActivity.class);
                 intent.putParcelableArrayListExtra("bookList", booksList);
-                startActivity(intent);
+                intent.putParcelableArrayListExtra("readBookList", readBookList);
+                startActivityForResult(intent, 2);
                 return true;
             case R.id.action_add:
                 intent = new Intent(this, AddBookActivity.class);
                 intent.putParcelableArrayListExtra("bookList", booksList);
+                intent.putParcelableArrayListExtra("readBookList", readBookList);
                 startActivityForResult(intent, 1);
                 return true;
+            case R.id.action_read_list:
+                intent = new Intent(this, ReadBooksListActivity.class);
+                intent.putParcelableArrayListExtra("readBookList", readBookList);
+                startActivity(intent);
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -240,7 +257,12 @@ public class MainActivity extends AppCompatActivity {
                 booksList = data.getParcelableArrayListExtra("books");
                 Assert.assertNotNull(booksList);
             }
-
+        }
+        else if (requestCode == 2) {
+            if (resultCode == RESULT_OK) {
+                booksList = data.getParcelableArrayListExtra("books");
+                readBookList = data.getParcelableArrayListExtra("readBookList");
+            }
         }
     }
     @Override
@@ -283,6 +305,7 @@ public class MainActivity extends AppCompatActivity {
         icicle.putInt("read", read);
         icicle.putInt("rem", to_read);
         icicle.putParcelableArrayList("bookList", booksList);
+        icicle.putParcelableArrayList("readBookList", readBookList);
     }
 
     @Override

@@ -16,4 +16,8 @@
         android:title="@string/action_add"
         android:icon="@drawable/ic_action_add"
         app:showAsAction="withText|ifRoom"/>
+    <item
+        android:id="@+id/action_read_list"
+        android:title="@string/title_activity_read_books_list"
+        app:showAsAction="never"/>
 </menu>
