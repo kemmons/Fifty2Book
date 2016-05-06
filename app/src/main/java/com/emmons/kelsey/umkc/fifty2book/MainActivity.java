@@ -165,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
             long days_passed = getDaysDiff(date, start_date);
             if (days_passed != -1) {
                 String time_left = Integer.toString((int) (time - days_passed));
-                String label = res.getString(R.string.days_left, time_left);
+                String label = String.format(res.getString(R.string.days_left), time_left);
                 t.setText(label);
             }
             else {
