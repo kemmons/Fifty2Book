@@ -89,10 +89,12 @@ public class AddBookActivity extends AppCompatActivity {
 
     public void alertUser() {
         AlertDialog alertDialog = new AlertDialog.Builder(AddBookActivity.this).create();
-        alertDialog.setTitle("Error");
-        alertDialog.setMessage("One of the required fields was left blank.");
+        alertDialog.setTitle(R.string.error);
+        String errorMsg = getResources().getString(R.string.addBookError);
+        alertDialog.setMessage(errorMsg);
         alertDialog.setIcon(android.R.drawable.ic_dialog_alert);
-        alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
+        String okLbl = getResources().getString(R.string.ok);
+        alertDialog.setButton(okLbl, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 finish();

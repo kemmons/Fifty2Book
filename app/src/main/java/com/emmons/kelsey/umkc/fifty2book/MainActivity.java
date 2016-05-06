@@ -3,6 +3,7 @@ package com.emmons.kelsey.umkc.fifty2book;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.widget.DrawerLayout;
@@ -33,9 +34,10 @@ public class MainActivity extends AppCompatActivity {
     private String time_units = "", start_date = "";
     private ListView mDrawerList;
     private DrawerLayout mDrawerLayout;
-    private ArrayAdapter<String> mAdapter;
+    private ArrayAdapter<CharSequence> mAdapter;
     private ActionBarDrawerToggle mDrawerToggle;
     private String mActivityTitle;
+    private Resources res = getResources();
     public ArrayList<BookObject> booksList = new ArrayList<>();
     public ArrayList<BookObject> readBookList = new ArrayList<>();
 
@@ -71,8 +73,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void addDrawerItems() {
-        String[] activityArray = {"Book List", "Quick Stats", "Add Book"};
-        mAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, activityArray);
+        mAdapter = ArrayAdapter.createFromResource(this, R.array.navArray, android.R.layout.simple_list_item_1);
         mDrawerList.setAdapter(mAdapter);
 
         mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -87,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.drawer_open, R.string.drawer_close) {
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-                getSupportActionBar().setTitle("Navigation");
+                getSupportActionBar().setTitle(R.string.navTitle);
                 invalidateOptionsMenu();
                 }
 
@@ -147,45 +148,51 @@ public class MainActivity extends AppCompatActivity {
 
     private void UpdateGoals() {
         String date = getCurrentTime();
+        String wks = res.getStringArray(R.array.spinnerArray)[1];
+        String mnths = res.getStringArray(R.array.spinnerArray)[2];
         TextView t = (TextView) findViewById(R.id.goalValue);
         t.setText(Integer.toString(goal));
         t = (TextView) findViewById(R.id.remainValue);
         t.setText(Integer.toString(to_read));
         if  (!time_units.equals("")) {
-            if (time_units.equals("Weeks")) {
+            if (time_units.equals(wks)) {
                 time = time * 7;
-            } else if (time_units.equals("Months")) {
+            } else if (time_units.equals(mnths)) {
                 time = time * 30;
             }
             t = (TextView) findViewById(R.id.daysVal);
 
             long days_passed = getDaysDiff(date, start_date);
             if (days_passed != -1) {
-                int time_left = (int) (time - days_passed);
-                t.setText(Integer.toString(time_left) + " days left");
+                String time_left = Integer.toString((int) (time - days_passed));
+                String label = res.getString(R.string.days_left, time_left);
+                t.setText(label);
             }
             else {
-                t.setText(Integer.toString(time) + " days left");
+                String time_left = Integer.toString(time);
+                String label = res.getString(R.string.days_left, time_left);
+                t.setText(label);
             }
         }
         if (goal > 0) {
             int progress = ((read / goal) * 100);
             t = (TextView) findViewById(R.id.progressPercent);
-            t.setText(Integer.toString(progress) + "%");
+            String pString = Integer.toString(progress);
+            String label = String.format(res.getString(R.string.percent), pString);
+            t.setText(label);
             ProgressBar prog = (ProgressBar) findViewById(R.id.goalProgress);
             prog.setProgress(progress);
 
             ProgressBar timeBar = (ProgressBar) findViewById(R.id.progressBar);
             long days = getDaysDiff(date, start_date);
             if (days != -1) {
-                int time_prog = (int) ((days / time) * 100);
+                int time_prog = (int) (((time - days) / time) * 100);
                 timeBar.setProgress(time_prog);
             }
             else {
                 timeBar.setProgress(100);
             }
         }
-        //TODO: add calculation using calendar to update progress bar
     }
 
     public static long getDaysDiff(String today, String started) {
@@ -227,7 +234,7 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 } catch (Exception e) {
                     e.printStackTrace();
-                    Toast.makeText(MainActivity.this, "There was an issue launching Settings", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, R.string.settingsError, Toast.LENGTH_SHORT).show();
                 }
             case R.id.action_list:
                 intent = new Intent(this, BookListActivity.class);

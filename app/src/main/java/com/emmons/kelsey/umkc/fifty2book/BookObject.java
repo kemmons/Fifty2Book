@@ -1,5 +1,6 @@
 package com.emmons.kelsey.umkc.fifty2book;
 
+import android.content.res.Resources;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -7,6 +8,7 @@ import android.os.Parcelable;
  * Created by Kelsey Emmons on 2/21/2016.
  */
 public class BookObject implements Parcelable {
+    private Resources res;
     private String _title;
     private String _author;
     private String _genre;
@@ -52,8 +54,8 @@ public class BookObject implements Parcelable {
     public void setRating(String rating) {_rating = rating;}
 
     public String toString(){
-        return "Title: " + _title + "\nAuthor: " + _author + "\nGenre: " + _genre +
-                "\nPages: " + _pageNo + "\nRating: " + _rating;
+        String bookAsString = String.format(res.getString(R.string.bookToString), _title, _author, _genre, _pageNo, _rating);
+        return bookAsString;
     }
 
     @Override

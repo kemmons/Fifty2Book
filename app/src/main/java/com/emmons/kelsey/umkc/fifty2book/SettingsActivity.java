@@ -23,6 +23,7 @@ import org.w3c.dom.Text;
 
 import java.security.Key;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -33,6 +34,7 @@ public class SettingsActivity extends AppCompatActivity {
     private int goal = 0, read = 0, to_read = 0;
     private int time_left = 0;
     private String time_type = "none";
+    private String date = "";
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +65,7 @@ public class SettingsActivity extends AppCompatActivity {
                 time_left = Integer.parseInt(editTimeGoal.getText().toString());
                 time_type = goalSpinner.getSelectedItem().toString();
 
+                GetDate();
                 SavePreferences();
                 finish();
             }
@@ -70,16 +73,21 @@ public class SettingsActivity extends AppCompatActivity {
         setGoalButton.setOnClickListener(sGButton);
     }
 
+    private void GetDate() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date now = new Date();
+        date = sdf.format(now);
+    }
+
     private void SavePreferences() {
         SharedPreferences goalPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         SharedPreferences.Editor prefsEditor = goalPrefs.edit();
-        SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
         prefsEditor.putInt(GOAL,goal);
         prefsEditor.putInt(READ,read);
         prefsEditor.putInt(REM, to_read);
         prefsEditor.putInt(TIME, time_left);
         prefsEditor.putString(T_UNITS, time_type);
-        prefsEditor.putString(START_DATE, date.toString());
+        prefsEditor.putString(START_DATE, date);
         prefsEditor.apply();
     }
 

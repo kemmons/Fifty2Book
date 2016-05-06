@@ -64,13 +64,13 @@ public class BookListActivity extends ListActivity {
                     AlertDialog.Builder builder = new AlertDialog.Builder(BookListActivity.this);
                     builder.setTitle(R.string.delete_alert_title);
                     builder.setMessage(book);
-                    builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             books.remove(position);
                         }
                     });
-                    builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             // TODO: 4/22/2016 Add 'No' action

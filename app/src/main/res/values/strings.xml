@@ -16,6 +16,12 @@
         <item>Weeks</item>
         <item>Months</item>
     </string-array>
+    <string-array name="navArray">
+        <item>Add Book</item>
+        <item>Quick Stats</item>
+        <item>Book List</item>
+        <item>Read Books List</item>
+    </string-array>
     <string name="settingsGoalText">I\'m going to read </string>
     <string name="settingsGoalText1">books in </string>
     <string name="goalButton">Set Goal!</string>
@@ -37,4 +43,18 @@
     <string name="alert_title">Book Options</string>
     <string name="title_activity_read_books_list">Read Books List</string>
     <string name="delete_alert_title">Delete Book?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="ok">OK</string>
+    <string name="navTitle">Navigation</string>
+    <string name="days_left">%1$ days left</string>
+    <string name="percent">%1$ %</string>
+    <string name="settingsError">There was an issue launching Settings</string>
+    <string name="addBookError">One of the required fields was left blank.</string>
+    <string name="error">Error</string>
+    <string name="bookToString">Title: %1$
+    Author: %2$
+    Genre: %3$
+    Pages: %4$
+    Rating: %5$</string>
 </resources>
